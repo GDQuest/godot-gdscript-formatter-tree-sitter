@@ -79,12 +79,39 @@
     (#delimiter! "\n\n")
 )
 
-
-(class_definition) @append_hardline
+; Add an empty line between extends and the first property definition
 (source
     (extends_statement) @append_delimiter
+    .
+    (variable_statement)
     (#delimiter! "\n\n")
 )
+
+; Add an empty line between different kinds of property definitions
+; The goal is to detect groups of exported vars and regular vars, and
+; add a newline between them.
+; FIXME: this won't work because variable_statement matches every property
+(source
+    (variable_statement
+        (annotations)
+    ) @append_delimiter
+    .
+    (variable_statement)
+    (#delimiter! "\n")
+)
+
+; This is the same as above but it aims to match vars without annotations followed
+; by vars with annotations.
+(source
+    (variable_statement) @append_delimiter
+    .
+    (variable_statement
+        (annotations)
+    )
+    (#delimiter! "\n")
+)
+
+(class_definition) @append_hardline
 
 (class_definition
   (body) @prepend_indent_start @append_indent_end
