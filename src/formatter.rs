@@ -50,8 +50,10 @@ pub fn format_gdscript_with_config(
 
     drop(writer);
 
-    let formatted_content = String::from_utf8(output)
+    let mut formatted_content = String::from_utf8(output)
         .map_err(|e| format!("Failed to parse topiary output as UTF-8: {}", e))?;
+
+    formatted_content = postprocess(formatted_content);
 
     Ok(formatted_content)
 }
@@ -81,5 +83,24 @@ fn remove_newlines_after_extends_statement(mut content: String) -> String {
     content = re
         .replace(&content, "$extends_line$extends_name\n")
         .to_string();
+    content
+}
+
+fn postprocess(mut content: String) -> String {
+    content = remove_trailing_whitespaces(content);
+
+    content
+}
+
+/// Remove trailing whitespace characters
+fn remove_trailing_whitespaces(mut content: String) -> String {
+    // This regex matches lines that contains only whitespace(tabs, spaces) characters and ends with \n
+    let re = RegexBuilder::new(r"^\s+\n$")
+        .multi_line(true)
+        .build()
+        .expect("empty line regex should compile");
+
+    content = re.replace_all(&content, "\n").to_string();
+
     content
 }

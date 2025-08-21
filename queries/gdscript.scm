@@ -56,11 +56,10 @@
 ; Note: the . between nodes constrains the query to direct siblings (instead of
 ; matching a series of indirect siblings like e.g. variable + class + ... +
 ; function)
-(source
-    [(variable_statement) (function_definition) (class_definition) (signal_statement) (const_statement) (enum_definition) (constructor_definition)] @append_delimiter
+([(variable_statement) (function_definition) (class_definition) (signal_statement) (const_statement) (enum_definition) (constructor_definition)]
     .
-    [(function_definition) (constructor_definition) (class_definition)]
-    (#delimiter! "\n\n"))
+    [(function_definition) (constructor_definition) (class_definition)] @prepend_delimiter @prepend_hardline
+    (#delimiter! "\n"))
 
 ; CONST DEFINITIONS
 (const_statement ":" @append_space)
