@@ -58,10 +58,21 @@ pub fn format_gdscript_with_config(
     Ok(formatted_content)
 }
 
+/// This function runs over the content before going through topiary.
+/// It is used to prepare the content for formatting or save performance by
+/// pre-applying rules that could be performance-intensive through topiary.
 fn preprocess(content: &str) -> String {
     let mut content = content.to_owned();
 
     content = remove_newlines_after_extends_statement(content);
+
+    content
+}
+
+/// This function runs over the content after going through topiary. We use it
+/// to clean up/balance out the output.
+fn postprocess(mut content: String) -> String {
+    content = clean_up_lines_with_only_whitespace(content);
 
     content
 }
@@ -86,20 +97,14 @@ fn remove_newlines_after_extends_statement(mut content: String) -> String {
     content
 }
 
-fn postprocess(mut content: String) -> String {
-    content = remove_trailing_whitespaces(content);
-
-    content
-}
-
-/// Remove trailing whitespace characters
-fn remove_trailing_whitespaces(mut content: String) -> String {
-    // This regex matches lines that contains only whitespace(tabs, spaces) characters and ends with \n
+/// This function cleans up lines that contain only whitespace characters
+/// (spaces, tabs) and a newline character. It only keeps a single newline
+/// character.
+fn clean_up_lines_with_only_whitespace(mut content: String) -> String {
     let re = RegexBuilder::new(r"^\s+\n$")
         .multi_line(true)
         .build()
         .expect("empty line regex should compile");
-
     content = re.replace_all(&content, "\n").to_string();
 
     content
