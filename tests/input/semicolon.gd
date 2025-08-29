@@ -8,7 +8,8 @@ func foo():
 
 
 func bar():
-	var c = 2; var d = 3;
+	var c = 2;
+	var d = 3;
 	if c < d:
 		print("c is less than d");
 	if c > d:

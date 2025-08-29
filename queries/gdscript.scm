@@ -206,4 +206,4 @@
 
 ; This is used to preserve new lines after semicolons for people who use them on
 ; all code lines
-(";") @append_input_softline
+(";") @append_hardline

@@ -116,19 +116,11 @@ fn clean_up_lines_with_only_whitespace(mut content: String) -> String {
 /// This function fixes semicolons that end up on their own line with indentation
 /// by moving them to the end of the previous line.
 fn fix_dangling_semicolons(mut content: String) -> String {
-    // First, handle semicolons at the beginning of lines (move to end of previous line)
-    let re_leading = RegexBuilder::new(r"\n(\s*);(\s*)")
-        .multi_line(true)
-        .build()
-        .expect("leading semicolon regex should compile");
-    content = re_leading.replace_all(&content, ";$2").to_string();
-
-    // Then, handle trailing whitespace before semicolons at end of lines
     let re_trailing = RegexBuilder::new(r"\s+;$")
         .multi_line(true)
         .build()
         .expect("semicolon regex should compile");
-    content = re_trailing.replace_all(&content, ";").to_string();
+    content = re_trailing.replace_all(&content, "").to_string();
 
     content
 }
