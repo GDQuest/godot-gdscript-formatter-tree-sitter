@@ -204,5 +204,6 @@
 (annotation (arguments "(" @prepend_antispace))
 (function_definition (annotations (annotation) @append_hardline))
 
-; For now we remove semicolons and not handle them
-(";") @delete
+; This is used to preserve new lines after semicolons for people who use them on
+; all code lines
+(";") @append_input_softline
