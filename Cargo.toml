@@ -19,6 +19,7 @@ assert_cmd = "2.0"
 predicates = "3.0"
 tempfile = "3.0"
 test_each_file = "0.3.5"
+similar = "2.7.0"
 
 [features]
 default = ["gdscript"]
