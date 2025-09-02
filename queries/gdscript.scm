@@ -37,7 +37,7 @@
 
 ; FUNCTIONS
 (function_definition (name) @append_antispace)
-(function_definition ":" @append_hardline)
+(function_definition (body) @prepend_hardline)
 (arguments "," @append_space)
 "->" @prepend_space @append_space
 (parameters "," @append_space)
@@ -51,7 +51,7 @@
     (#multi_line_only!))
 
 ; CLASS DEFINITIONS
-(class_definition ":" @append_hardline)
+(class_definition (body) @prepend_hardline)
 (class_name_statement) @append_space
 (source
     (extends_statement) @append_delimiter @append_hardline
@@ -80,7 +80,7 @@
 (enumerator_list) @prepend_space
 
 ; CONSTRUCTORS
-(constructor_definition ":" @append_hardline)
+(constructor_definition (body) @prepend_hardline)
 
 ; OPERATORS
 ; Allow line breaks around binary operators for long expressions
@@ -110,11 +110,17 @@
 
 ; CONTROL FLOW FORMATTING
 ; Colons in control structures - remove space before colon
-(if_statement ":" @prepend_antispace @append_hardline)
-(elif_clause ":" @prepend_antispace @append_hardline)
-(else_clause ":" @prepend_antispace @append_hardline)
-(for_statement "in" ":" @prepend_antispace @append_hardline)
-(while_statement ":" @prepend_antispace @append_hardline)
+(if_statement ":" @prepend_antispace)
+(elif_clause ":" @prepend_antispace)
+(else_clause ":" @prepend_antispace)
+(for_statement "in" ":" @prepend_antispace)
+(while_statement ":" @prepend_antispace)
+
+(if_statement (body) @prepend_hardline)
+(elif_clause (body) @prepend_hardline)
+(else_clause (body) @prepend_hardline)
+(for_statement (body) @prepend_hardline)
+(while_statement (body) @prepend_hardline)
 
 ((identifier) . ":" @append_space . (type))
 
@@ -168,16 +174,20 @@
 (source . (annotation) @append_hardline)
 
 (setget) @prepend_indent_start @append_indent_end
-(setget ":" @prepend_antispace @append_hardline)
+(setget ":" @prepend_antispace)
+(setget ":" @append_hardline . (comment)? @do_nothing)
 ; why body node in set_body/get_body not getting new indent even though we added indent to all body node?
-(set_body ":" @prepend_antispace @append_hardline @append_indent_start)
-(get_body ":" @prepend_antispace @append_hardline @append_indent_start)
+(set_body ":" @prepend_antispace @append_indent_start)
+(set_body ":" @append_hardline . (comment)? @do_nothing)
+(get_body ":" @prepend_antispace @append_indent_start)
+(get_body ":" @append_hardline . (comment)? @do_nothing)
 ((set_body) @append_hardline @append_indent_end)
 ((get_body) @append_hardline @append_indent_end)
 
-(match_statement ":" @prepend_antispace @append_hardline)
-(match_body) @prepend_indent_start @append_indent_end
-(pattern_section ":" @prepend_antispace @append_hardline)
+(match_statement ":" @prepend_antispace)
+(match_body) @prepend_indent_start @append_indent_end @prepend_hardline
+(pattern_section ":" @prepend_antispace)
+(pattern_section (body) @prepend_hardline)
 (pattern_section "," @prepend_antispace @append_space)
 
 ; This is for ternary expressions, e.g. `a if b else c`
@@ -193,7 +203,7 @@
 
 ; LAMBDA
 (lambda ":" @append_space (#single_line_only!))
-(lambda ":" @append_hardline (#multi_line_only!))
+(lambda ":" @append_hardline . (comment)? @do_nothing (#multi_line_only!))
 (lambda (parameters "(" @prepend_antispace))
 
 ; ANNOTATIONS
