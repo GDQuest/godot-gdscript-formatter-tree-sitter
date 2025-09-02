@@ -28,37 +28,27 @@ fn assert_formatted_eq(result: &str, expected: &str, file_path: &Path) {
     }
 }
 
-#[test]
-fn test_all_sample_files() {
-    let input_dir = Path::new("tests/input");
-    let expected_dir = Path::new("tests/expected");
+test_each_file::test_each_path! { in "./tests/input" => test_file }
 
-    if !input_dir.exists() || !expected_dir.exists() {
-        panic!("Test directories do not exist");
-    }
+fn test_file(file_path: &Path) {
+    let file_name = file_path.file_name().expect("path is not a file path");
 
-    let input_files = fs::read_dir(input_dir)
-        .expect("Failed to read input directory")
-        .filter_map(|entry| entry.ok())
-        .filter(|entry| entry.path().extension().map_or(false, |ext| ext == "gd"))
-        .collect::<Vec<_>>();
+    let input_path = file_path;
+    let expected_path = file_path
+        .parent()
+        .unwrap()
+        .parent()
+        .unwrap()
+        .join("expected/")
+        .join(file_name);
 
-    for input_file in input_files {
-        let input_path = input_file.path();
-        let expected_path = expected_dir.join(input_file.file_name());
+    let input_content =
+        fs::read_to_string(&input_path).expect(&format!("Failed to read {}", input_path.display()));
+    let expected_content = fs::read_to_string(&expected_path)
+        .expect(&format!("Failed to read {}", expected_path.display()));
 
-        if !expected_path.exists() {
-            panic!("Expected file not found: {}", expected_path.display());
-        }
+    let result = format_gdscript(&input_content)
+        .expect(&format!("Failed to format {}", input_path.display()));
 
-        let input_content = fs::read_to_string(&input_path)
-            .expect(&format!("Failed to read {}", input_path.display()));
-        let expected_content = fs::read_to_string(&expected_path)
-            .expect(&format!("Failed to read {}", expected_path.display()));
-
-        let result = format_gdscript(&input_content)
-            .expect(&format!("Failed to format {}", input_path.display()));
-
-        assert_formatted_eq(&result, &expected_content, &input_path);
-    }
+    assert_formatted_eq(&result, &expected_content, &input_path);
 }

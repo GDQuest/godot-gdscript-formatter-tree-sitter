@@ -357,6 +357,7 @@ dependencies = [
  "predicates",
  "regex",
  "tempfile",
+ "test_each_file",
  "topiary-core",
  "tree-sitter-gdscript",
 ]
@@ -760,6 +761,18 @@ name = "termtree"
 version = "0.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8f50febec83f5ee1df3015341d8bd429f2d1cc62bcba7ea2076759d315084683"
+
+[[package]]
+name = "test_each_file"
+version = "0.3.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e5b980155ee175f5b054bafd14e434b89c151ffae1a8bd9d607425a7a6911e2b"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+ "unicode-ident",
+]
 
 [[package]]
 name = "tokio"
