@@ -5,8 +5,8 @@ use std::path::Path;
 
 fn make_whitespace_visible(s: &str) -> String {
     s.replace(' ', "·")
-        .replace('\t', "├──┤")
-        .replace('\n', "␊\n")
+        .replace('\t', "⇥   ")
+        .replace('\n', "↲\n")
 }
 
 fn assert_formatted_eq(result: &str, expected: &str, file_path: &Path) {
