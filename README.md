@@ -176,7 +176,7 @@ For example, if you want to add a formatting rule for function definitions, you'
 
 ## License
 
-[MIT](https://github.com/GDQuest/godot-gdscript-formatter-tree-sitter?tab=MIT-1-ov-file#readme)
+[MIT](https://github.com/GDQuest/godot-gdscript-formatter-tree-sitter/blob/main/LICENSE)
 
 ## Motivation
 
