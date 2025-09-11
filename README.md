@@ -8,7 +8,7 @@ The goal of this project is to provide a simple and fast GDScript code formatter
 
 ## Installing and running the formatter
 
-You can find binaries for Windows, macOS, and Linux in the [releases tab](releases) of this repository. Download the binary for your platform, unzip it, rename it to the command name you want (e.g. `gdscript-format`) and place it somewhere in your system PATH.
+You can find binaries for Windows, macOS, and Linux in the [releases tab](https://github.com/GDQuest/godot-gdscript-formatter-tree-sitter/releases) of this repository. Download the binary for your platform, unzip it, rename it to the command name you want (e.g. `gdscript-format`) and place it somewhere in your system PATH.
 
 To format a file, run:
 
@@ -33,7 +33,7 @@ Ready for daily use for commonly written code - 09/04/2025 - The formatter now h
 
 And more!
 
-**Please report any issues you find with code snippets!** GDScript has grown into a complex language with many different syntax patterns. While the formatter covers many common cases, there can always be edge cases or less common syntax that may not be handled correctly yet. You can find known issues in the [GitHub issues section](issues).
+**Please report any issues you find with code snippets!** GDScript has grown into a complex language with many different syntax patterns. While the formatter covers many common cases, there can always be edge cases or less common syntax that may not be handled correctly yet. You can find known issues in the [GitHub issues section](https://github.com/GDQuest/godot-gdscript-formatter-tree-sitter/issues).
 
 ### Formatting on single or multiple lines
 
@@ -176,7 +176,7 @@ For example, if you want to add a formatting rule for function definitions, you'
 
 ## License
 
-MIT
+[MIT](https://github.com/GDQuest/godot-gdscript-formatter-tree-sitter?tab=MIT-1-ov-file#readme)
 
 ## Motivation
 
