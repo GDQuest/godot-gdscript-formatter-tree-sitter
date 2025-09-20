@@ -20,7 +20,7 @@ You can find binaries for Windows, macOS, and Linux in the [releases tab](https:
 
 To format a file, run:
 
-```
+```bash
 gdscript-format path/to/file.gd
 ```
 
@@ -29,6 +29,33 @@ Format with check mode, to use in a build system (exit code 1 if changes needed)
 ```bash
 gdscript-format --check path/to/file.gd
 ```
+
+To see other possible options, run `gdscript-format` without any arguments.
+
+## Using the formatter in code editors
+
+> [!NOTE]
+> If you managed to make the formatter work in a code editor that isn't listed here, consider contributing to this section or sharing your findings in [this](https://github.com/GDQuest/GDScript-formatter/issues/26) issue.
+
+### Zed
+
+First, install the [zed-gdscript](https://github.com/GDQuest/zed-gdscript) extension. This is needed to ensure that the formatter will only format GDScript files. Once installed, add the following JSON configuration to your `settings.json` file:
+
+```json
+{
+  "languages": {
+    "GDScript": {
+      "formatter": {
+        "external": {
+          "command": "gdscript-format"
+        }
+      }
+    }
+  }
+}
+```
+
+If you renamed the binary to something else, adjust the `command` name accordingly. Once this is done, Zed will run the formatter every time you save a GDScript file. If this doesn't happen, ensure that the `format_on_save` setting in `settings.json` is set to `true` (this is the default). You can also format manually by executing `editor: format` command in Zed.
 
 ## Status
 
